@@ -27,7 +27,7 @@ export default function Snippet({
         </div>
         <div>
           <p className="font-bold">{ nickName }</p>
-          <p className="text-sm">{ `@${userId} · ${date}` }</p>
+          <p className="text-sm text-slate-500">{ `@${userId} · ${date}` }</p>
         </div>
       </div>
       <div>

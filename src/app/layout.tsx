@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Toaster } from '@/component/ui/toaster'
 import ThemeProvider from '@/component/theme-provider'
-import Header from '@/component/header'
 import Dock from '@/component/dock'
 import '@/style/globals.css'
 
@@ -24,7 +23,6 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
           {children}
           <Dock />
           <Toaster />

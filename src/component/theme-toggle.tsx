@@ -17,9 +17,9 @@ export default function ThemeToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
-          <span className="i-tabler-sun h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <span className="i-tabler-moon absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+        <Button className="text-lg" variant="outline" size="icon">
+          <span className="i-tabler-sun dark:hidden" />
+          <span className="hidden i-tabler-moon dark:block" />
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>

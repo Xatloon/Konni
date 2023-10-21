@@ -50,7 +50,11 @@ export default function Login() {
 
   return (
     <Dialog>
-      <DialogTrigger><Image className="rounded-full" src={Avatar} alt="avatar" width={30} height={30} /></DialogTrigger>
+      <DialogTrigger asChild>
+        <Button variant="ghost" size="icon">
+          <Image className="rounded-lg" src={Avatar} alt="avatar" width={30} height={30} />
+        </Button>
+      </DialogTrigger>
       <DialogContent className="w-11/12 rounded-lg">
         <div className="space-y-4">
           <div className="space-y-4">
