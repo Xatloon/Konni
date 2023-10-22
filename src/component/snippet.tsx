@@ -1,39 +1,90 @@
 import Image from 'next/image'
 import Avatar from '@/asset/image/avatar.jpeg'
+import formatDate from '@/util/format-date'
 
 interface SnippetProps {
-  nickName: string
-  userId: string
-  avatar?: string
+  id: string
+  author: string
   content: string
-  image?: string
-  date: string
-  snippetId: string
+  created_at: string
+  likes: number
+  replies: number
+  media?: {
+    type: 'image' | 'video'
+    url: string
+  }[]
+  hashtags: string[]
+  mentions?: string[]
+  is_reply: boolean
+  reply_id?: string
 }
 
-export default function Snippet({
-  nickName,
-  userId,
-  avatar,
+export default async function Snippet({
+  id,
+  author,
   content,
-  image,
-  date,
+  created_at,
+  likes,
+  replies,
+  media,
+  hashtags,
+  is_reply,
 }: SnippetProps) {
+  const response = await fetch(`http://localhost:3000/api/user/profile?id=${author}`)
+  const data = await response.json()
+  const { name, avatar } = data[0]
+  function getGridColumns(length: number) {
+    if (length < 3)
+      return length === 1 ? '1' : '2'
+    else
+      return '3'
+  }
   return (
-    <section className="flex flex-col gap-2 px-4 py-6">
-      <div className="flex gap-2 items-center">
-        <div className="flex-shrink-0">
-          { avatar ? <Image className="rounded-full w-11 h-11" src={avatar} width={40} height={40} alt="avatar" /> : <Image src={Avatar} alt="avatar" /> }
-        </div>
-        <div>
-          <p className="font-bold">{ nickName }</p>
-          <p className="text-sm text-slate-500">{ `@${userId} · ${date}` }</p>
-        </div>
-      </div>
-      <div>
-        <p>{ content }</p>
-        {image ? <Image className="rounded-lg border mt-2" src={image} width={1080} height={720} alt="demo" /> : null}
-      </div>
-    </section>
+    !is_reply
+      ? (
+        <section className="flex flex-col gap-2 px-4 py-6">
+          <div className="flex gap-2 items-center">
+            <div>
+              { avatar ? <Image className="rounded-full w-10 h-10 object-cover" src={avatar} width={40} height={40} alt="avatar" /> : <Image src={Avatar} alt="avatar" /> }
+            </div>
+            <div className="w-fit">
+              <p className="font-bold">{ name }</p>
+              <p className="text-sm text-slate-500">{ `@${author} · ${formatDate(created_at)}` }</p>
+            </div>
+          </div>
+          <div>
+            <p>{ content }</p>
+            { media
+              ? (
+                <div className={`w-full grid gap-2 mt-2 grid-cols-${getGridColumns(media.length)}`}>
+                  { media.map(({ type, url }) => (
+                    <div key={id + url}>
+                      { type === 'image' ? <Image className="w-full object-cover rounded-lg aspect-square" src={url} width={100} height={100} alt="image" /> : <video src={url} controls /> }
+                    </div>
+                  )) }
+                </div>
+                )
+              : null }
+          </div>
+          <div className="flex gap-2 px-2">
+            { hashtags.map(hashtag => (
+              <div key={id + hashtag} className="py-1">
+                <span className="text-blue-500 text-sm">{ hashtag }</span>
+              </div>
+            )) }
+          </div>
+          <div className="flex gap-4 px-2">
+            <div className="flex items-center gap-2">
+              <span className="i-tabler-heart"></span>
+              <span>{ likes }</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="i-tabler-message-circle"></span>
+              <span>{ replies }</span>
+            </div>
+          </div>
+        </section>
+        )
+      : null
   )
 }

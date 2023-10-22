@@ -1,37 +1,33 @@
-import Snippet from '@/component/snippet'
+import Snippet from './snippet'
 
-const feeds = [{
-  nickName: 'Nick',
-  userId: 'NickTheDemo',
-  avatar: '/avatar.jpeg',
-  content: 'This is a demo.',
-  image: '/demo.jpeg',
-  date: '2021-10-01',
-  snippetId: '1',
-}, {
-  nickName: 'Nick',
-  userId: 'NickTheDemo',
-  avatar: '/avatar.jpeg',
-  content: 'This is a demo.',
-  image: '/demo.jpeg',
-  date: '2021-10-01',
-  snippetId: '2',
-}, {
-  nickName: 'Nick',
-  userId: 'NickTheDemo',
-  avatar: '/avatar.jpeg',
-  content: 'This is a demo.',
-  image: '/demo.jpeg',
-  date: '2021-10-01',
-  snippetId: '2',
-}]
+interface FeedData {
+  id: string
+  author: string
+  content: string
+  created_at: string
+  likes: number
+  replies: number
+  images?: [
+    {
+      type: 'image' | 'video'
+      url: string
+    },
+  ]
+  hashtags: string[]
+  mentions: string[]
+  is_reply: boolean
+  reply_id?: string
+}
 
-export default function Feed() {
+export default async function Feed() {
+  const response = await fetch('http://localhost:3000/api/post/get?id=user123')
+  const feeds: FeedData[] = await response.json()
+
   return (
     <>
-      { feeds.map(feed => (
-        <Snippet {...feed} key={feed.snippetId} />
-      )) }
+      {feeds?.map(feed => (
+        <Snippet {...feed} key={feed.id} />
+      ))}
     </>
   )
 }
