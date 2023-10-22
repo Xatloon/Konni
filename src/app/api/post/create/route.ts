@@ -1,3 +1,5 @@
-export async function GET(req: any, res: any) {
-  res.json({ message: 'Hello World' })
+export async function GET() {
+  return new Response(JSON.stringify({ konni: 'Work in Progress' }), {
+    headers: { 'content-type': 'application/json' },
+  })
 }
