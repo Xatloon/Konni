@@ -1,3 +1,4 @@
+import process from 'node:process'
 import Snippet from './snippet'
 
 interface FeedData {
@@ -20,7 +21,7 @@ interface FeedData {
 }
 
 export default async function Feed() {
-  const response = await fetch('http://localhost:3000/api/post/get?id=user123')
+  const response = await fetch(`${process.env.HOSTNAME}/api/post/get?id=user123`)
   const feeds: FeedData[] = await response.json()
 
   return (
