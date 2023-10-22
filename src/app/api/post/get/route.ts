@@ -1,4 +1,5 @@
 import dummyPost from '@/app/api/dummy-post'
+import { GET as fGET } from '@/app/api/user/following/route'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
@@ -27,7 +28,8 @@ export async function GET(request: Request) {
     })
   }
   if (id) {
-    const following = await fetch(`http://localhost:3000/api/user/following?id=${id}`, { method: 'GET' }).then(res => res.json()).then(res => res[0].following)
+    // const following = await fetch(`http://localhost:3000/api/user/following?id=${id}`).then(res => res.json()).then(res => res[0].following)
+    const following = await fGET(new Request(`http://test.com/api?id=${id}`)).then(res => res.json()).then(res => res[0].following)
     result = result.filter((post) => {
       if (following)
         return following.includes(post.author)

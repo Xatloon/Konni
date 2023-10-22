@@ -1,7 +1,8 @@
-import process from 'node:process'
+// import process from 'node:process'
 import Image from 'next/image'
 import Avatar from '@/asset/image/avatar.jpeg'
 import formatDate from '@/util/format-date'
+import { GET } from '@/app/api/user/profile/route'
 
 interface SnippetProps {
   id: string
@@ -31,7 +32,8 @@ export default async function Snippet({
   hashtags,
   is_reply,
 }: SnippetProps) {
-  const response = await fetch(`${process.env.HOSTNAME}/api/user/profile?id=${author}`)
+  // const response = await fetch(`${process.env.HOSTNAME}/api/user/profile?id=${author}`)
+  const response = await GET(new Request(`http://test.com/api?id=${author}`))
   const data = await response.json()
   const { name, avatar } = data[0]
   function getGridColumns(length: number) {
