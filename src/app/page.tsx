@@ -65,7 +65,7 @@ export default function Home() {
             <Feed />
           </TabsContent>
         </Tabs>
-        <div className="hidden sm:block">
+        <div className="hidden sm:block divide-y">
           <ShortForm />
           <Feed />
         </div>
