@@ -52,7 +52,7 @@ export default function Login() {
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="ghost" size="icon">
-          <Image className="rounded-lg" src={Avatar} alt="avatar" width={30} height={30} />
+          <Image className="rounded-lg border" src={Avatar} alt="avatar" width={36} height={36} />
         </Button>
       </DialogTrigger>
       <DialogContent className="w-11/12 rounded-lg">

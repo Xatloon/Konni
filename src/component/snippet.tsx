@@ -36,16 +36,10 @@ export default async function Snippet({
   const response = await GET(new Request(`http://test.com/api?id=${author}`))
   const data = await response.json()
   const { name, avatar } = data[0]
-  function getGridColumns(length: number) {
-    if (length < 3)
-      return length === 1 ? '1' : '2'
-    else
-      return '3'
-  }
   return (
     !is_reply
       ? (
-        <section className="flex flex-col gap-2 px-4 py-6">
+        <section className="flex flex-col  gap-2 px-4 py-4">
           <div className="flex gap-2 items-center">
             <div>
               { avatar ? <Image className="rounded-full w-10 h-10 object-cover" src={avatar} width={40} height={40} alt="avatar" /> : <Image src={Avatar} alt="avatar" /> }
@@ -59,24 +53,24 @@ export default async function Snippet({
             <p>{ content }</p>
             { media
               ? (
-                <div className={`w-full grid gap-2 mt-2 grid-cols-${getGridColumns(media.length)}`}>
+                <div className={`w-full grid gap-2 mt-2 ${media.length === 1 ? 'grid-cols-1' : (media.length === 2 ? 'grid-cols-2' : 'grid-cols-3')}`}>
                   { media.map(({ type, url }) => (
                     <div key={id + url}>
-                      { type === 'image' ? <Image className="w-full object-cover rounded-lg aspect-square" src={url} width={100} height={100} alt="image" /> : <video src={url} controls /> }
+                      { type === 'image' ? <Image className="w-full object-cover rounded-lg aspect-square" src={url} width={300} height={300} alt="image" /> : <video src={url} controls /> }
                     </div>
                   )) }
                 </div>
                 )
               : null }
           </div>
-          <div className="flex gap-2 px-2">
+          <div className="flex gap-2">
             { hashtags.map(hashtag => (
               <div key={id + hashtag} className="py-1">
                 <span className="text-blue-500 text-sm">{ hashtag }</span>
               </div>
             )) }
           </div>
-          <div className="flex gap-4 px-2">
+          <div className="flex gap-4">
             <div className="flex items-center gap-2">
               <span className="i-tabler-heart"></span>
               <span>{ likes }</span>
